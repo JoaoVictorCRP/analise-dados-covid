@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-
+# Lendo os dados
 df = pd.read_csv('https://raw.githubusercontent.com/wcota/covid19br/master/cases-brazil-states.csv')
 # Mudando nomes das colunas
 df = df.rename(columns={
@@ -32,16 +32,21 @@ df = df.rename(columns={
     'vaccinated_third': 'Vacinados terceira dose',
     'vaccinated_third_per_100_inhabitants': 'Vacinados terceira dose por 100 habitantes'
 })
-
-estado_escolhido = 'SP'
+# Lista de Estados
 estados = list(df['Estado'].unique())
-
-coluna = 'Casos por 100 mil habitantes'
+# Colunas
+col = 'Casos por 100 mil habitantes'
 colunas = ['Novos óbitos', 'Novos casos', 'Óbitos por 100 mil habitantes', 'Casos por 100 mil habitantes']
-
+#Titulo
+st.write(col)
 # Filtrar por estado
+estado_escolhido = st.selectbox('Estado',estados)
 df = df[df['Estado'] == estado_escolhido]
-
-fig = px.line(df, x='Data', y=coluna, title=coluna+' - '+estado_escolhido)
-
-fig.show()
+# Barra lateral
+with st.sidebar:
+    col = st.radio(
+        "Categoria",
+        colunas
+    )
+#Gráfico
+st.line_chart(df, x='Data', y=col)
