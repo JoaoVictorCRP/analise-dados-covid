@@ -36,7 +36,7 @@ df = df.rename(columns={
 # Lista de Estados
 estados = list(df['Estado'].unique())
 # Opcoes de categoria
-opcoes = ['Óbitos', 'Casos', 'Vacina']
+opcoes = ['Óbitos', 'Casos', 'Vacinação']
 # Selecionar categorias
 categoria = st.selectbox('Categoria',opcoes)
 graficos = ct.graficos_por_categoria(categoria)
