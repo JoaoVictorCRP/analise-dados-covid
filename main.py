@@ -49,13 +49,20 @@ with st.sidebar:
     )
 df = df[df['Estado'] == estado_escolhido]
 #Compontentes
-st.title(categoria+' - '+estado_escolhido)
+head1, head2 = st.columns(2)
+with head1:
+    st.title(categoria+' - '+estado_escolhido)
+with head2:
+    st.image(ct.bandeira(estado_escolhido),width=110)
+
 st.write(descricao)
 op_week = st.toggle('Dados semanais', False)
+
 if op_week:
     week = st.slider('Semana epidemiológica',9,311)
     df = df[df['Semana epidemiológica'] == week]
-    st.write(':red[OBS: os dados da COVID-19 entre as semanas 153 e 200 não foram divulgados pelo ministério da saúde.]')
+    st.subheader(':red[OBS: os dados da COVID-19 entre as semanas 153 e 200 não foram divulgados pelo ministério da saúde.]')
+
 #Gráficos
 figs = []
 for item in graficos:
