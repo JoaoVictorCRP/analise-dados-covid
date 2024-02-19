@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-import utils.categorias as ct
+import utils.externas as ex
 # Lendo os dados
 df = pd.read_csv('https://raw.githubusercontent.com/wcota/covid19br/master/cases-brazil-states.csv')
 # Mudando nomes das colunas
@@ -39,8 +39,8 @@ estados = list(df['Estado'].unique())
 opcoes = ['Óbitos', 'Casos', 'Vacinação']
 # Selecionar categorias
 categoria = st.selectbox('Categoria',opcoes)
-graficos = ct.graficos_por_categoria(categoria)[0]
-descricao = ct.graficos_por_categoria(categoria)[1]
+graficos = ex.graficos_por_categoria(categoria)[0]
+descricao = ex.graficos_por_categoria(categoria)[1]
 # Barra lateral (Seleção de estado)
 with st.sidebar:
     estado_escolhido = st.selectbox(
@@ -53,9 +53,9 @@ head1, head2 = st.columns(2)
 with head1:
     st.title(categoria+' - '+estado_escolhido)
 with head2:
-    st.image(ct.bandeira(estado_escolhido),width=110)
+    st.image(ex.bandeira(estado_escolhido),width=110)
 
-st.write(descricao)
+st.subheader(descricao)
 op_week = st.toggle('Dados semanais', False)
 
 if op_week:
