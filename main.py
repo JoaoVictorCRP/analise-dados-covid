@@ -37,23 +37,20 @@ df = df.rename(columns={
 estados = list(df['Estado'].unique())
 # Opcoes de categoria
 opcoes = ['Óbitos', 'Casos', 'Vacinação']
-# Selecionar categorias
-categoria = st.selectbox('Categoria',opcoes)
+# Selecionar estado
+estado_escolhido = st.selectbox('Estado', estados)
+# Barra lateral (Seleção de categoria)
+with st.sidebar:
+    categoria = st.selectbox('Categoria',opcoes)
+df = df[df['Estado'] == estado_escolhido]
 graficos = ex.graficos_por_categoria(categoria)[0]
 descricao = ex.graficos_por_categoria(categoria)[1]
-# Barra lateral (Seleção de estado)
-with st.sidebar:
-    estado_escolhido = st.selectbox(
-        "Estado",
-        estados
-    )
-df = df[df['Estado'] == estado_escolhido]
 #Compontentes
 head1, head2 = st.columns(2)
 with head1:
     st.title(categoria+' - '+estado_escolhido)
 with head2:
-    st.image(ex.bandeira(estado_escolhido),width=110)
+    st.image(ex.bandeira(estado_escolhido),width=100)
 
 st.subheader(descricao)
 op_week = st.toggle('Dados semanais', False)
@@ -65,11 +62,11 @@ if op_week:
 
 #Gráficos
 figs = []
-for item in graficos:
-    fig = px.line(df, x='Data', y=item)
+for graf in graficos:
+    fig = px.line(df, x='Data', y=graf)
     figs.append(fig)
 #Colocando gráficos no streamlit
-for node in figs:
-    st.plotly_chart(node, use_container_width=True)
+for fig in figs:
+    st.plotly_chart(fig, use_container_width=True)
 #Rodapé
 st.caption('Dados retirados a partir do site: https://github.com/wcota/covid19br')
