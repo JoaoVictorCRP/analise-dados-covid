@@ -39,12 +39,10 @@ estados = list(df['Estado'].unique())
 opcoes = ['Óbitos', 'Casos', 'Vacinação']
 # Selecionar estado
 estado_escolhido = st.selectbox('Estado', estados)
+main_df = df[df['Estado'] == estado_escolhido]
 # Barra lateral (Seleção de categoria)
 with st.sidebar:
     categoria = st.selectbox('Categoria',opcoes)
-df = df[df['Estado'] == estado_escolhido]
-graficos = ex.graficos_por_categoria(categoria)[0]
-descricao = ex.graficos_por_categoria(categoria)[1]
 #Compontentes
 head1, head2 = st.columns(2)
 with head1:
@@ -52,21 +50,33 @@ with head1:
 with head2:
     st.image(ex.bandeira(estado_escolhido),width=100)
 
+descricao = ex.graficos_por_categoria(categoria)[1]
 st.subheader(descricao)
 op_week = st.toggle('Dados semanais', False)
 
 if op_week:
     week = st.slider('Semana epidemiológica',9,311)
-    df = df[df['Semana epidemiológica'] == week]
+    main_df = df[df['Semana epidemiológica'] == week]
     st.subheader(':red[OBS: os dados da COVID-19 entre as semanas 153 e 200 não foram divulgados pelo ministério da saúde.]')
 
 #Gráficos
+graficos_pizza = ex.graficos_por_categoria(categoria)[0]
 figs = []
-for graf in graficos:
-    fig = px.line(df, x='Data', y=graf)
+for graf in graficos_pizza:
+    fig = px.line(main_df, x='Data', y=graf)
     figs.append(fig)
 #Colocando gráficos no streamlit
 for fig in figs:
     st.plotly_chart(fig, use_container_width=True)
+
+#Grafico de comparação entre dois estados
+st.subheader('COMPARAÇÃO ENTRE ESTADOS')
+estado1 = st.selectbox('Estado Nº1', estados)
+estado2 = st.selectbox('Estado nº2', estados)
+df_estado1 = df[df['Estado'] == estado1]
+df_estado2 = df[df['Estado'] == estado2]
+df_comparacao = pd.concat([df_estado1, df_estado2])
+st.line_chart((df_comparacao)) # Concantenação?
+
 #Rodapé
 st.caption('Dados retirados a partir do site: https://github.com/wcota/covid19br')
