@@ -70,13 +70,13 @@ for fig in figs:
     st.plotly_chart(fig, use_container_width=True)
 
 #Grafico de comparação entre dois estados
-st.subheader('COMPARAÇÃO ENTRE ESTADOS')
+st.subheader('COMPARAR ESTADOS')
 estado1 = st.selectbox('Estado Nº1', estados)
 estado2 = st.selectbox('Estado nº2', estados)
 df_estado1 = df[df['Estado'] == estado1]
 df_estado2 = df[df['Estado'] == estado2]
 df_comparacao = pd.concat([df_estado1, df_estado2])
-st.line_chart((df_comparacao)) # Concantenação?
-
+fig_comparacao = px.line(df_comparacao, x='Data',y='Total de óbitos', color='Estado')
+st.plotly_chart(fig_comparacao, use_container_width=True)
 #Rodapé
 st.caption('Dados retirados a partir do site: https://github.com/wcota/covid19br')
