@@ -71,12 +71,22 @@ for fig in figs:
 
 #Grafico de comparação entre dois estados
 st.subheader('COMPARAR ESTADOS')
-estado1 = st.selectbox('Estado Nº1', estados)
-estado2 = st.selectbox('Estado nº2', estados)
+head1_compare, head2_compare = st.columns(2)
+head3_compare, head4_compare = st.columns(2)
+
+with head1_compare:
+    estado1 = st.selectbox('Estado Nº1', estados)
+with head2_compare:
+    estado1_bandeira = st.image(ex.bandeira(estado1), width=95)
+with head3_compare:
+    estado2 = st.selectbox('Estado nº2', estados)
+with head4_compare:
+    estado2_bandeira = st.image(ex.bandeira(estado2), width=95)
+
 df_estado1 = df[df['Estado'] == estado1]
 df_estado2 = df[df['Estado'] == estado2]
 df_comparacao = pd.concat([df_estado1, df_estado2])
-fig_comparacao = px.line(df_comparacao, x='Data',y='Total de óbitos', color='Estado')
+fig_comparacao = px.line(df_comparacao, x='Data',y='Total de óbitos', color='Estado',)
 st.plotly_chart(fig_comparacao, use_container_width=True)
 #Rodapé
 st.caption('Dados retirados a partir do site: https://github.com/wcota/covid19br')
