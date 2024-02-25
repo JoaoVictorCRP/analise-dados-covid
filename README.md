@@ -9,3 +9,5 @@ Este projeto é uma aplicação web interativa desenvolvida com base no Lab ofer
 # Estrutura do Projeto ⚙️
 - main.py: Este arquivo contém o código principal da aplicação, incluindo a leitura e tratamento dos dados, a criação da interface do usuário com o Streamlit e a visualização dos gráficos.
 - utils/externas.py: Este arquivo contém funções auxiliares utilizadas no projeto, incluindo a definição dos gráficos por categoria e a obtenção das URLs das bandeiras dos estados.
+
+#### Acesso em: https://dadoscovidjvcp.streamlit.app/
