@@ -1,6 +1,6 @@
-def graficos_por_categoria(cat):
+def graficos_por_categoria(cat: str) -> list:
     """
-        Recebe uma categoria como paramêtro, retorna uma lista, a qual:\n
+        Recebe uma categoria como parâmetro, retorna uma lista, a qual:\n
         ~> Índice 0: lista os gráficos\n
         ~> Índice 1: descrição da categoria.
 
@@ -13,9 +13,9 @@ def graficos_por_categoria(cat):
     else: # cat == Vacinação
         return [ ['Vacinados', 'Vacinados por 100 habitantes', 'Vacinados segunda dose', 'Vacinados dose única', 'Vacinados terceira dose'] , 'Dados de vacinação :medical_symbol:' ]
     
-def bandeira(estado):
+def bandeira(estado: str) -> str:
     """
-        Recebe um estado como paramêtro e retorna a bandeira deste.
+        Recebe um estado como parâmetro e retorna a bandeira deste.
         :param estado: String
     """
     match estado:
@@ -81,3 +81,15 @@ def bandeira(estado):
             return 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Bandeira_do_Rio_Grande_do_Sul.svg/140px-Bandeira_do_Rio_Grande_do_Sul.svg.png'
         case 'PR':
             return 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Bandeira_do_Paran%C3%A1.svg/140px-Bandeira_do_Paran%C3%A1.svg.png'
+        
+def imagem_categoria(cat: str) -> str:
+    """
+        Recebe uma categoria como parâmetro e retorna a imagem correspondente desta.
+        :param cat: String
+    """
+    if cat == 'Óbitos':
+        return 'https://images2.imgbox.com/8b/ce/hYbjm1CM_o.png'
+    elif cat == 'Casos':
+        return 'https://images2.imgbox.com/31/23/vpnQTbju_o.png'
+    else: # cat == "Vacinação"
+        return 'https://images2.imgbox.com/c3/9e/cs7vxq1B_o.png'
