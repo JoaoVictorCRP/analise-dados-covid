@@ -4,7 +4,7 @@ import streamlit as st
 import utils.externas as ex
 # Lendo os dados
 df = pd.read_csv('https://raw.githubusercontent.com/wcota/covid19br/master/cases-brazil-states.csv')
-# Mudando nomes das colunas
+# Mudando colunas
 df = df.rename(columns={
     'epi_week': 'Semana epidemiológica',
     'date': 'Data',
@@ -43,6 +43,7 @@ main_df = df[df['Estado'] == estado_escolhido]
 # Barra lateral (Seleção de categoria)
 with st.sidebar:
     categoria = st.selectbox('Categoria',opcoes)
+    # ano = st.selectbox('Ano', ['2020', '2021', '2022', '2023']) - TODO
 #Compontentes
 head1, head2 = st.columns(2)
 with head1:
@@ -57,7 +58,7 @@ op_week = st.toggle('Dados semanais', False)
 if op_week:
     week = st.slider('Semana epidemiológica',9,311)
     main_df = df[df['Semana epidemiológica'] == week]
-    st.subheader(':red[OBS: os dados da COVID-19 entre as semanas 153 e 200 não foram divulgados pelo ministério da saúde.]')
+    st.subheader('OBS: os dados da COVID-19 entre as semanas 153 e 200 não foram divulgados pelo ministério da saúde.')
 
 #Gráficos
 graficos_pizza = ex.graficos_por_categoria(categoria)[0]
